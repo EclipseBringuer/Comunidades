@@ -29,5 +29,6 @@ class ComunidadViewHolder(view: View) : RecyclerView.ViewHolder(view),
     ) {
         menu!!.setHeaderTitle(comunidad.name)
         menu.add(this.adapterPosition, 0, 0, "Eliminar")
+        menu.add(this.adapterPosition, 1, 1, "Editar")
     }
 }

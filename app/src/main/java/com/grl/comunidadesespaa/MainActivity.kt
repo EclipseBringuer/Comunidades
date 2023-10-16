@@ -1,11 +1,13 @@
 package com.grl.comunidadesespaa
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -26,7 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         lateinit var comunidadAfectada: Comunidad
-        comunidadAfectada = ComunidadProvider.comunidadList[item.itemId]
+        comunidadAfectada = ComunidadProvider.comunidadList[item.groupId]
         when (item.itemId) {
             0 -> {
                 val alert =
@@ -51,7 +53,12 @@ class MainActivity : AppCompatActivity() {
                         }.create()
                 alert.show()
             }
-
+            1->{
+                val intent= Intent(this,EditActivity::class.java)
+                intent.putExtra("img",comunidadAfectada.image)
+                intent.putExtra("name",comunidadAfectada.name)
+                startActivity(intent)
+            }
             else -> return super.onContextItemSelected(item)
         }
 

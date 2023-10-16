@@ -2,4 +2,6 @@
     <string name="app_name">ComunidadesEspaña</string>
     <string name="limpiar">Limpiar</string>
     <string name="recargar">Recargar</string>
+    <string name="cambiar">Cambiar</string>
+    <string name="cancelar">Cancelar</string>
 </resources>
