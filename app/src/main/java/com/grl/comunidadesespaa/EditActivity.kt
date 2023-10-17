@@ -14,7 +14,7 @@ class EditActivity : AppCompatActivity() {
         setContentView(R.layout.activity_edit)
         title = "Comunidades autónomas"
         val nombre = intent.getStringExtra("name")
-        val imagen = intent.getIntExtra("img",0)
+        val imagen = intent.getIntExtra("img", 0)
         val textview = findViewById<TextView>(R.id.campo)
         val cancelar = findViewById<Button>(R.id.btnCancel)
         val cambiar = findViewById<Button>(R.id.btnChange)
@@ -22,15 +22,15 @@ class EditActivity : AppCompatActivity() {
         textview.hint = nombre
         img.setImageResource(imagen)
 
-        cancelar.setOnClickListener{
+        cancelar.setOnClickListener {
             finish()
         }
-        cambiar.setOnClickListener{
+        cambiar.setOnClickListener {
             val intent = Intent()
             val cajetin = textview.text.toString()
-            if(cajetin!=""){
-            intent.putExtra("nombre",cajetin)
-            setResult(RESULT_OK,intent)
+            if (cajetin != "") {
+                intent.putExtra("nombre", cajetin)
+                setResult(RESULT_OK, intent)
             }
             finish()
         }
