@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import com.grl.comunidadesespaa.databinding.ActivityEditBinding
-import com.grl.comunidadesespaa.databinding.ActivityMainBinding
 
 class EditActivity : AppCompatActivity() {
 
