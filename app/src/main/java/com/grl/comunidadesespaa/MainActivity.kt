@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -18,20 +20,31 @@ class MainActivity : AppCompatActivity() {
 
     //Variable binding para acceder a los elemntos de la vista de forma sencilla
     private lateinit var binding: ActivityMainBinding
+    private lateinit var intentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var comunidadAfectada: Comunidad
 
     //Metodo main que lanza la activity
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         title = "Comunidades autónomas"
         setContentView(binding.root)
         initRecycleView()
+        intentLauncher=registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()){
+                result: ActivityResult ->
+            if(result.resultCode== RESULT_OK){
+                comunidadAfectada.name=result.data?.extras?.getString("nombre").toString()
+                binding.rvComunidad.adapter?.notifyDataSetChanged()
+            }
+        }
     }
 
     //Menu contextual de las cardView
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        lateinit var comunidadAfectada: Comunidad
         comunidadAfectada = ComunidadProvider.comunidadList[item.groupId]
+
         when (item.itemId) {
             0 -> {
                 val alert =
@@ -60,7 +73,7 @@ class MainActivity : AppCompatActivity() {
                 val intent= Intent(this,EditActivity::class.java)
                 intent.putExtra("img",comunidadAfectada.image)
                 intent.putExtra("name",comunidadAfectada.name)
-                startActivity(intent)
+                intentLauncher.launch(intent)
             }
             else -> return super.onContextItemSelected(item)
         }

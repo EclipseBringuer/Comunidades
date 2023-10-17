@@ -1,23 +1,26 @@
 package com.grl.comunidadesespaa
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import com.grl.comunidadesespaa.databinding.ActivityEditBinding
 import com.grl.comunidadesespaa.databinding.ActivityMainBinding
 
 class EditActivity : AppCompatActivity() {
-    private lateinit var binding:ActivityEditBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
-        binding = ActivityEditBinding.inflate(layoutInflater)
         title = "Comunidades autónomas"
         val nombre = intent.getStringExtra("name")
-        val imagen = intent.getIntExtra("image",0)
-        val textview = binding.campo
-        val cancelar = binding.btnCancel
-        val cambiar = binding.btnChange
-        val img = binding.foto
+        val imagen = intent.getIntExtra("img",0)
+        val textview = findViewById<TextView>(R.id.campo)
+        val cancelar = findViewById<Button>(R.id.btnCancel)
+        val cambiar = findViewById<Button>(R.id.btnChange)
+        val img = findViewById<ImageView>(R.id.foto)
         textview.hint = nombre
         img.setImageResource(imagen)
 
@@ -25,7 +28,13 @@ class EditActivity : AppCompatActivity() {
             finish()
         }
         cambiar.setOnClickListener{
-
+            val intent = Intent()
+            val cajetin = textview.text.toString()
+            if(cajetin!=""){
+            intent.putExtra("nombre",cajetin)
+            setResult(RESULT_OK,intent)
+            }
+            finish()
         }
     }
 }

@@ -1,3 +1,3 @@
 package com.grl.comunidadesespaa
 
-data class Comunidad (val name:String, val image:Int)
+data class Comunidad (var name:String, var image:Int)
