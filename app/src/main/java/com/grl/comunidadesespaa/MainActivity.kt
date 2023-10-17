@@ -16,8 +16,10 @@ import com.grl.comunidadesespaa.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    //Variable binding para acceder a los elemntos de la vista de forma sencilla
     private lateinit var binding: ActivityMainBinding
 
+    //Metodo main que lanza la activity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -26,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         initRecycleView()
     }
 
+    //Menu contextual de las cardView
     override fun onContextItemSelected(item: MenuItem): Boolean {
         lateinit var comunidadAfectada: Comunidad
         comunidadAfectada = ComunidadProvider.comunidadList[item.groupId]
@@ -61,12 +64,10 @@ class MainActivity : AppCompatActivity() {
             }
             else -> return super.onContextItemSelected(item)
         }
-
-
-
         return true
     }
 
+    //Inicia el recycle view
     private fun initRecycleView() {
         val manager = LinearLayoutManager(this)
         binding.rvComunidad.layoutManager = manager
@@ -74,10 +75,12 @@ class MainActivity : AppCompatActivity() {
             ComunidadAdapter(ComunidadProvider.llenar()) { onItemSelected(it) }
     }
 
+    //Muestra un snackBar
     private fun display(message: String) {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 
+    //Metodo que funciona cuando tovas una cardView
     private fun onItemSelected(comunidad: Comunidad) {
         Toast.makeText(
             this,
@@ -86,11 +89,13 @@ class MainActivity : AppCompatActivity() {
         ).show()
     }
 
+    //Método para crear el menu de la barra de tareas
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         return true
     }
 
+    //Hace que el menu de la toolbar funcione dependiendo de la opción seleccionada
     @SuppressLint("NotifyDataSetChanged")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
