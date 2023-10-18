@@ -31,11 +31,11 @@ class MainActivity : AppCompatActivity() {
         title = "Comunidades autónomas"
         setContentView(binding.root)
         initRecycleView()
-        intentLauncher=registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()){
-                result: ActivityResult ->
-            if(result.resultCode== RESULT_OK){
-                comunidadAfectada.name=result.data?.extras?.getString("nombre").toString()
+        intentLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result: ActivityResult ->
+            if (result.resultCode == RESULT_OK) {
+                comunidadAfectada.name = result.data?.extras?.getString("nombre").toString()
                 binding.rvComunidad.adapter?.notifyDataSetChanged()
             }
         }
@@ -69,12 +69,14 @@ class MainActivity : AppCompatActivity() {
                         }.create()
                 alert.show()
             }
-            1->{
-                val intent= Intent(this,EditActivity::class.java)
-                intent.putExtra("img",comunidadAfectada.image)
-                intent.putExtra("name",comunidadAfectada.name)
+
+            1 -> {
+                val intent = Intent(this, EditActivity::class.java)
+                intent.putExtra("img", comunidadAfectada.image)
+                intent.putExtra("name", comunidadAfectada.name)
                 intentLauncher.launch(intent)
             }
+
             else -> return super.onContextItemSelected(item)
         }
         return true

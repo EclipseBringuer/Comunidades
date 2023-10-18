@@ -4,7 +4,7 @@ class ComunidadProvider {
     companion object {
         var comunidadList: MutableList<Comunidad> = mutableListOf()
 
-        fun llenar():MutableList<Comunidad> {
+        fun llenar(): MutableList<Comunidad> {
             comunidadList = mutableListOf(
                 Comunidad("Andalucía", R.drawable.andalucia),
                 Comunidad("Aragón", R.drawable.aragon),
