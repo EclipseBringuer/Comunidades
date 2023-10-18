@@ -6,28 +6,27 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import com.grl.comunidadesespaa.databinding.ActivityEditBinding
 
 class EditActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityEditBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit)
+        binding= ActivityEditBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         title = "Comunidades autónomas"
-        val nombre = intent.getStringExtra("name")
-        val imagen = intent.getIntExtra("img", 0)
-        val textview = findViewById<TextView>(R.id.campo)
-        val cancelar = findViewById<Button>(R.id.btnCancel)
-        val cambiar = findViewById<Button>(R.id.btnChange)
-        val img = findViewById<ImageView>(R.id.foto)
-        textview.hint = nombre
-        img.setImageResource(imagen)
 
-        cancelar.setOnClickListener {
+        binding.campo.hint = intent.getStringExtra("name")
+        binding.foto.setImageResource(intent.getIntExtra("img", 0))
+
+        binding.btnCancel.setOnClickListener {
             finish()
         }
-        cambiar.setOnClickListener {
+
+        binding.btnChange.setOnClickListener {
             val intent = Intent()
-            val cajetin = textview.text.toString()
+            val cajetin = binding.campo.text.toString()
             if (cajetin != "") {
                 intent.putExtra("nombre", cajetin)
                 setResult(RESULT_OK, intent)

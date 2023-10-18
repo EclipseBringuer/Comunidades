@@ -12,6 +12,7 @@ class ComunidadViewHolder(view: View) : RecyclerView.ViewHolder(view),
     private var binding = ItemComunidadBinding.bind(view)
     private lateinit var comunidad: Comunidad
 
+    //Da los valores y propiedades de la comunidad a la item-comunidad.xml
     fun render(comunidad: Comunidad, onClickListener: (Comunidad) -> Unit) {
         this.comunidad = comunidad
         binding.name.text = comunidad.name
@@ -22,6 +23,7 @@ class ComunidadViewHolder(view: View) : RecyclerView.ViewHolder(view),
         itemView.setOnCreateContextMenuListener(this)
     }
 
+    //Crea el menu contextual
     override fun onCreateContextMenu(
         menu: ContextMenu?,
         v: View?,

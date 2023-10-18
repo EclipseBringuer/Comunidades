@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    //Inicia el recycle view
+    //Inicializa el recycle view
     private fun initRecycleView() {
         val manager = LinearLayoutManager(this)
         binding.rvComunidad.layoutManager = manager
@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
     }
 
-    //Metodo que funciona cuando tovas una cardView
+    //Metodo que funciona cuando tocas una cardView
     private fun onItemSelected(comunidad: Comunidad) {
         Toast.makeText(
             this,
@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
         ).show()
     }
 
-    //Método para crear el menu de la barra de tareas
+    //Método para inflar el menu de la barra de tareas
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         return true
