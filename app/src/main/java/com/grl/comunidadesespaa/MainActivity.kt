@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.grl.comunidadesespaa.adapter.ComunidadAdapter
 import com.grl.comunidadesespaa.databinding.ActivityMainBinding
+import com.grl.comunidadesespaa.domain.ComunidadDAO
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,6 +23,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var intentLauncher: ActivityResultLauncher<Intent>
     private lateinit var comunidadAfectada: Comunidad
+    private lateinit var listaComunidades: MutableList<Comunidad>
+    private lateinit var miDAO: ComunidadDAO
 
     //Metodo main que lanza la activity
     @SuppressLint("NotifyDataSetChanged")
@@ -36,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         ) { result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
                 comunidadAfectada.name = result.data?.extras?.getString("nombre").toString()
+                miDAO.actualizarBBDD(this,comunidadAfectada)
                 binding.rvComunidad.adapter?.notifyDataSetChanged()
             }
         }
@@ -43,8 +47,7 @@ class MainActivity : AppCompatActivity() {
 
     //Menu contextual de las cardView
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        comunidadAfectada = ComunidadProvider.comunidadList[item.groupId]
-
+        comunidadAfectada = listaComunidades[item.groupId]
         when (item.itemId) {
             0 -> {
                 val alert =
@@ -56,14 +59,15 @@ class MainActivity : AppCompatActivity() {
                             "Aceptar"
                         ) { _, _ ->
                             display("Se ha eliminado ${comunidadAfectada.name}")
-                            ComunidadProvider.comunidadList.removeAt(item.groupId)
+                            miDAO.eliminarComunidad(this,comunidadAfectada)
+                            listaComunidades.removeAt(item.groupId)
                             binding.rvComunidad.adapter?.notifyItemRemoved(item.groupId)
                             binding.rvComunidad.adapter?.notifyItemRangeChanged(
                                 item.groupId,
-                                ComunidadProvider.comunidadList.size
+                                listaComunidades.size
                             )
                             binding.rvComunidad.adapter =
-                                ComunidadAdapter(ComunidadProvider.comunidadList) { comunidad ->
+                                ComunidadAdapter(listaComunidades) { comunidad ->
                                     onItemSelected(comunidad)
                                 }
                         }.create()
@@ -84,10 +88,12 @@ class MainActivity : AppCompatActivity() {
 
     //Inicializa el recycle view
     private fun initRecycleView() {
+        miDAO = ComunidadDAO()
+        listaComunidades = miDAO.cargarLista(this)
         val manager = LinearLayoutManager(this)
         binding.rvComunidad.layoutManager = manager
         binding.rvComunidad.adapter =
-            ComunidadAdapter(ComunidadProvider.llenar()) { onItemSelected(it) }
+            ComunidadAdapter(listaComunidades) { onItemSelected(it) }
     }
 
     //Muestra un snackBar
@@ -110,17 +116,18 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    //Hace que el menu de la toolbar funcione dependiendo de la opción seleccionada
+    //Hace que el menu de la barra de tareas funcione dependiendo de la opción seleccionada
     @SuppressLint("NotifyDataSetChanged")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
 
         if (id == R.id.recargar) {
+            listaComunidades=miDAO.cargarLista(this)
             binding.rvComunidad.adapter =
-                ComunidadAdapter(ComunidadProvider.llenar()) { onItemSelected(it) }
+                ComunidadAdapter(listaComunidades) { onItemSelected(it) }
             binding.rvComunidad.adapter?.notifyDataSetChanged()
         } else if (id == R.id.limpiar) {
-            ComunidadProvider.comunidadList.clear()
+            listaComunidades.clear()
             binding.rvComunidad.adapter?.notifyDataSetChanged()
         }
 
