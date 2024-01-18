@@ -129,6 +129,10 @@ class MainActivity : AppCompatActivity() {
         } else if (id == R.id.limpiar) {
             listaComunidades.clear()
             binding.rvComunidad.adapter?.notifyDataSetChanged()
+        } else if (id == R.id.logout) {
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.putExtra("logout",true)
+            startActivity(intent)
         }
 
         return super.onOptionsItemSelected(item)
