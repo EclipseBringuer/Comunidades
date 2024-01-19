@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         ) { result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
                 comunidadAfectada.name = result.data?.extras?.getString("nombre").toString()
-                miDAO.actualizarBBDD(this,comunidadAfectada)
+                miDAO.actualizarBBDD(this, comunidadAfectada)
                 binding.rvComunidad.adapter?.notifyDataSetChanged()
             }
         }
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
                             "Aceptar"
                         ) { _, _ ->
                             display("Se ha eliminado ${comunidadAfectada.name}")
-                            miDAO.eliminarComunidad(this,comunidadAfectada)
+                            miDAO.eliminarComunidad(this, comunidadAfectada)
                             listaComunidades.removeAt(item.groupId)
                             binding.rvComunidad.adapter?.notifyItemRemoved(item.groupId)
                             binding.rvComunidad.adapter?.notifyItemRangeChanged(
@@ -79,6 +79,18 @@ class MainActivity : AppCompatActivity() {
                 intent.putExtra("img", comunidadAfectada.image)
                 intent.putExtra("name", comunidadAfectada.name)
                 intentLauncher.launch(intent)
+            }
+
+            2 -> {
+                val intent = Intent(this, MapsActivity::class.java)
+                intent.putExtra("posicion", item.groupId)
+                startActivity(intent)
+            }
+
+            3 -> {
+                val intent = Intent(this, OpenStreetActivity::class.java)
+                intent.putExtra("posicion", item.groupId)
+                startActivity(intent)
             }
 
             else -> return super.onContextItemSelected(item)
@@ -122,7 +134,7 @@ class MainActivity : AppCompatActivity() {
         val id = item.itemId
 
         if (id == R.id.recargar) {
-            listaComunidades=miDAO.cargarLista(this)
+            listaComunidades = miDAO.cargarLista(this)
             binding.rvComunidad.adapter =
                 ComunidadAdapter(listaComunidades) { onItemSelected(it) }
             binding.rvComunidad.adapter?.notifyDataSetChanged()
@@ -131,7 +143,7 @@ class MainActivity : AppCompatActivity() {
             binding.rvComunidad.adapter?.notifyDataSetChanged()
         } else if (id == R.id.logout) {
             val intent = Intent(this, LoginActivity::class.java)
-            intent.putExtra("logout",true)
+            intent.putExtra("logout", true)
             startActivity(intent)
         }
 
