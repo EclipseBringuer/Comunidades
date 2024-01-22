@@ -1,4 +1,4 @@
-package com.grl.comunidadesespaa
+package com.grl.comunidadesespaa.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +11,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.grl.comunidadesespaa.model.Comunidad
+import com.grl.comunidadesespaa.R
 import com.grl.comunidadesespaa.databinding.ActivityMapsBinding
 import com.grl.comunidadesespaa.domain.ComunidadDAO
 

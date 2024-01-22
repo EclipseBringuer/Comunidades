@@ -1,8 +1,9 @@
-package com.grl.comunidadesespaa
+package com.grl.comunidadesespaa.activities
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.grl.comunidadesespaa.model.Comunidad
 import com.grl.comunidadesespaa.databinding.ActivityOpenStreetBinding
 import com.grl.comunidadesespaa.domain.ComunidadDAO
 import org.osmdroid.config.Configuration

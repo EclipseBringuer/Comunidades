@@ -1,4 +1,4 @@
-package com.grl.comunidadesespaa
+package com.grl.comunidadesespaa.model
 
 data class Comunidad(
     var id: Int,

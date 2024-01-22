@@ -1,4 +1,4 @@
-package com.grl.comunidadesespaa
+package com.grl.comunidadesespaa.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

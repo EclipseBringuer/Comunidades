@@ -3,7 +3,7 @@ package com.grl.comunidadesespaa.domain
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.grl.comunidadesespaa.Comunidad
+import com.grl.comunidadesespaa.model.Comunidad
 import com.grl.comunidadesespaa.R
 import java.lang.Exception
 

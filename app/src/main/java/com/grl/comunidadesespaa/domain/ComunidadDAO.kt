@@ -3,7 +3,7 @@ package com.grl.comunidadesespaa.domain
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
-import com.grl.comunidadesespaa.Comunidad
+import com.grl.comunidadesespaa.model.Comunidad
 
 class ComunidadDAO {
     fun cargarLista(context: Context?): MutableList<Comunidad> {

@@ -1,4 +1,4 @@
-package com.grl.comunidadesespaa
+package com.grl.comunidadesespaa.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -13,6 +13,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.grl.comunidadesespaa.model.Comunidad
+import com.grl.comunidadesespaa.R
 import com.grl.comunidadesespaa.adapter.ComunidadAdapter
 import com.grl.comunidadesespaa.databinding.ActivityMainBinding
 import com.grl.comunidadesespaa.domain.ComunidadDAO
@@ -23,8 +25,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var intentLauncher: ActivityResultLauncher<Intent>
     private lateinit var comunidadAfectada: Comunidad
-    private lateinit var listaComunidades: MutableList<Comunidad>
+    private lateinit var listaComunidades: List<Comunidad>
     private lateinit var miDAO: ComunidadDAO
+    private lateinit var adapter: ComunidadAdapter
 
     //Metodo main que lanza la activity
     @SuppressLint("NotifyDataSetChanged")
@@ -60,12 +63,8 @@ class MainActivity : AppCompatActivity() {
                         ) { _, _ ->
                             display("Se ha eliminado ${comunidadAfectada.name}")
                             miDAO.eliminarComunidad(this, comunidadAfectada)
-                            listaComunidades.removeAt(item.groupId)
-                            binding.rvComunidad.adapter?.notifyItemRemoved(item.groupId)
-                            binding.rvComunidad.adapter?.notifyItemRangeChanged(
-                                item.groupId,
-                                listaComunidades.size
-                            )
+                            listaComunidades = listaComunidades.minus(comunidadAfectada)
+                            adapter.updateList(listaComunidades)
                             binding.rvComunidad.adapter =
                                 ComunidadAdapter(listaComunidades) { comunidad ->
                                     onItemSelected(comunidad)
@@ -104,8 +103,8 @@ class MainActivity : AppCompatActivity() {
         listaComunidades = miDAO.cargarLista(this)
         val manager = LinearLayoutManager(this)
         binding.rvComunidad.layoutManager = manager
-        binding.rvComunidad.adapter =
-            ComunidadAdapter(listaComunidades) { onItemSelected(it) }
+        adapter = ComunidadAdapter(listaComunidades) { comunidad -> onItemSelected(comunidad) }
+        binding.rvComunidad.adapter = adapter
     }
 
     //Muestra un snackBar
@@ -135,12 +134,10 @@ class MainActivity : AppCompatActivity() {
 
         if (id == R.id.recargar) {
             listaComunidades = miDAO.cargarLista(this)
-            binding.rvComunidad.adapter =
-                ComunidadAdapter(listaComunidades) { onItemSelected(it) }
-            binding.rvComunidad.adapter?.notifyDataSetChanged()
+            adapter.updateList(listaComunidades)
         } else if (id == R.id.limpiar) {
-            listaComunidades.clear()
-            binding.rvComunidad.adapter?.notifyDataSetChanged()
+            listaComunidades = listOf()
+            adapter.updateList(listaComunidades)
         } else if (id == R.id.logout) {
             val intent = Intent(this, LoginActivity::class.java)
             intent.putExtra("logout", true)

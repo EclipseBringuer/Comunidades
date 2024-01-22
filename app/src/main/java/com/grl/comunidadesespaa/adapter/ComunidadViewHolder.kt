@@ -3,7 +3,7 @@ package com.grl.comunidadesespaa.adapter
 import android.view.ContextMenu
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.grl.comunidadesespaa.Comunidad
+import com.grl.comunidadesespaa.model.Comunidad
 import com.grl.comunidadesespaa.databinding.ItemComunidadBinding
 
 class ComunidadViewHolder(view: View) : RecyclerView.ViewHolder(view),
