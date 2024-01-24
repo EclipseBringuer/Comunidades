@@ -23,7 +23,7 @@ class EditActivity : AppCompatActivity() {
 
         binding.btnChange.setOnClickListener {
             val intent = Intent()
-            val cajetin = binding.campo.text.toString()
+            val cajetin = binding.campo.editText?.text.toString()
             if (cajetin != "") {
                 intent.putExtra("nombre", cajetin)
                 setResult(RESULT_OK, intent)

@@ -50,12 +50,15 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         prefs = getSharedPreferences("app", MODE_PRIVATE)
         setDefaultValuesIfExists()
-        if (prefs.getBoolean("remember", false) && !intent.getBooleanExtra("logout",false)) {
+        if (prefs.getBoolean("remember", false) && !intent.getBooleanExtra("logout", false)) {
             goToMain()
         }
         binding.loginButton.setOnClickListener {
             if (login()) {
-                savePreferences(binding.emailEdit.text.toString(), binding.passEdit.text.toString())
+                savePreferences(
+                    binding.emailEdit.editText?.text.toString(),
+                    binding.passEdit.editText?.text.toString()
+                )
                 goToMain()
             }
         }
@@ -66,8 +69,8 @@ class LoginActivity : AppCompatActivity() {
         val pass = prefs.getString("password", "")
         val remember = prefs.getBoolean("remember", false)
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pass)) {
-            binding.emailEdit.setText(email)
-            binding.passEdit.setText(pass)
+            binding.emailEdit.editText?.setText(email)
+            binding.passEdit.editText?.setText(pass)
         }
         binding.checkbox.isChecked = remember
     }
@@ -93,13 +96,13 @@ class LoginActivity : AppCompatActivity() {
 
     private fun login(): Boolean {
         var output = false
-        if (!checkEmail(binding.emailEdit.text.toString())) {
+        if (!checkEmail(binding.emailEdit.editText?.text.toString())) {
             Toast.makeText(
                 this,
                 "Usuario incorrecto, introduzca un e-mail válido",
                 Toast.LENGTH_SHORT
             ).show()
-        } else if (!checkPassword(binding.passEdit.text.toString())) {
+        } else if (!checkPassword(binding.passEdit.editText?.text.toString())) {
             Toast.makeText(
                 this,
                 "Contraseña no valida. Debe tener al menos 8 caracteres",
@@ -116,6 +119,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkPassword(password: String): Boolean {
-        return !TextUtils.isEmpty(password)
+        return !TextUtils.isEmpty(password) && password.length >= 8
     }
 }
