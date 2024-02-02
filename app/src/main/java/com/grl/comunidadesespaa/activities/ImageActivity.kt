@@ -13,6 +13,7 @@ class ImageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityImageBinding.inflate(layoutInflater)
+        title = "Comunidades autónomas"
         setContentView(binding.root)
         val id = intent.extras!!.getInt("id")
         val miDao = ComunidadDAO()
