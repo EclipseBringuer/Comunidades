@@ -34,5 +34,7 @@ class ComunidadViewHolder(view: View) : RecyclerView.ViewHolder(view),
         menu.add(this.adapterPosition, 1, 1, "Editar")
         menu.add(this.adapterPosition, 2, 2, "Abrir con Google Maps")
         menu.add(this.adapterPosition, 3, 3, "Abrir con OpenStreet")
+        menu.add(this.adapterPosition, 4, 4, "Hacer Foto")
+        menu.add(this.adapterPosition, 5, 5, "Ver Foto")
     }
 }

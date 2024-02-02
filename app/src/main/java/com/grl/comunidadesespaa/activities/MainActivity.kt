@@ -92,6 +92,19 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
+            4 -> {
+                val intent = Intent(this, FotoActivity::class.java)
+                intent.putExtra("comunidad", comunidadAfectada.name)
+                intent.putExtra("id", comunidadAfectada.id)
+                startActivity(intent)
+            }
+
+            5 -> {
+                val intent = Intent(this, ImageActivity::class.java)
+                intent.putExtra("id", comunidadAfectada.id)
+                startActivity(intent)
+            }
+
             else -> return super.onContextItemSelected(item)
         }
         return true

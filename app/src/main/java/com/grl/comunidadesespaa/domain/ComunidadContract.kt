@@ -17,6 +17,7 @@ class ComunidadContract {
                 const val COLUMNA_COORDENADA_X = "coordenada_x"
                 const val COLUMNA_COORDENADA_Y = "coordenada_y"
                 const val COLUMNA_IMAGEN_CAPITAL = "imagen_capital"
+                const val COLUMNA_URI = "uri"
             }
         }
     }

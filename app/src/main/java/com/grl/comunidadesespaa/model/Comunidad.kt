@@ -8,5 +8,6 @@ data class Comunidad(
     var capital: String,
     var x: Double,
     var y: Double,
-    var capImage: Int
+    var capImage: Int,
+    var uri: String
 )
